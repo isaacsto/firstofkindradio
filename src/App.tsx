@@ -21,6 +21,7 @@ export default function App() {
   return (
     <main>
       <h1>Modern Wulf</h1>
+      <h2>Traumatic Birth</h2>
       <Player tracks={tracks} />
     </main>
   );

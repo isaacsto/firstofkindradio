@@ -1,23 +1,36 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Track } from "../tracks";
 
 export default function Player({ tracks }: { tracks: Track[] }) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const shouldPlay = useRef(false);
   const [current, setCurrent] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  // after the track changes, start playing it
+  useEffect(() => {
+    if (shouldPlay.current) {
+      audioRef.current?.play().catch((err) => console.error(err));
+    }
+  }, [current]);
+
   const playTrack = (i: number) => {
     const audio = audioRef.current;
     if (!audio) return;
+
     if (i === current) {
-      playing ? audio.pause() : audio.play();
+      // same track: toggle play/pause
+      if (audio.paused) audio.play();
+      else audio.pause();
       return;
     }
+
+    // new track: switch, and let the effect start it
+    shouldPlay.current = true;
+    setProgress(0);
     setCurrent(i);
-    audio.src = tracks[i].src;
-    audio.play();
   };
 
   const fmt = (s: number) =>
@@ -39,6 +52,7 @@ export default function Player({ tracks }: { tracks: Track[] }) {
         {tracks.map((t, i) => (
           <li key={t.src}>
             <button onClick={() => playTrack(i)}>
+                {/* <img src={t.cover} alt="" className="thumb" /> */}
               {i === current && playing ? "❚❚" : "▶"} {t.title}
             </button>
           </li>
@@ -46,6 +60,7 @@ export default function Player({ tracks }: { tracks: Track[] }) {
       </ul>
 
       <div className="now-playing">
+         <img src={tracks[current].cover} alt={tracks[current].title} className="cover" />
         <span>{tracks[current].title}</span>
         <input
           type="range"

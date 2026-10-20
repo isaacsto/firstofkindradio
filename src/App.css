@@ -182,3 +182,60 @@
     border-right-color: var(--border);
   }
 }
+
+
+h1 {
+  text-align: left;
+}
+
+h2 {
+  text-align: center;
+}
+
+.thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cover {
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 12px;
+  margin: 0 auto 12px;
+}
+
+
+
+
+.tracklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: white; 
+}
+
+.tracklist button:hover {
+  font-weight: 700;
+}
+
+.tracklist button {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.now-playing input[type="range"] {
+  accent-color: #ffffff;
+}
